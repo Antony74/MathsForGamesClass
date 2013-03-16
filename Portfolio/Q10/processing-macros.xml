@@ -54,6 +54,9 @@ the Processing IDE -> Tools -> Install -> processing-java"/>
         <arg value="--sketch=@{sketch.dir}"/>
         <arg value="--output=@{sketch.dir}/output"/>
         <arg value="--build"/>
+        <arg value="--export"/>
+        <arg value="--platform=windows"/>
+        <arg value="--bits=32"/>
       </exec>
 
     </sequential>
