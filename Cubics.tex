@@ -1,0 +1,103 @@
+\documentclass{article}
+\usepackage{enumerate}
+
+\begin{document}
+\title{Common Cubic Curves}
+\date{}
+\maketitle
+
+These curves are constructed using just addition and multiplication.  However, because they require a *lot* of addition and multipication, they are summarised here in matrix notation.
+\\
+
+\begin{enumerate}
+
+\item Cubic Bezier curves
+
+\[
+	P(t) =
+	\left(
+		\begin{array}{cccc}
+			t^3 & t^2 & t & 1
+		\end{array}
+	\right)
+	\left(
+		\begin{array}{cccc}
+			-1 &  3 & -3 & 1  \\
+			 3 & -6 &  3 &  0 \\
+			-3 &  3 &  0 &  0 \\
+			 1 &  0 &  0 &  0 
+		\end{array}
+	\right)
+	\left(
+		\begin{array}{c}
+			p_1      \\
+			p_{c1} \\
+			p_{c2} \\
+			p_2
+		\end{array}
+	\right)
+\]
+\\
+
+This defines a curve from $p_1$ (at t = 0) to $p_2$ (at t = 1), using control points $p_{c1}$ and $p_{c2}$.
+The other curves are splines - which means you can join a series of points with a series of curves, and the whole thing
+will be nice and smooth.  The curve $P_i(t)$ runs from $p_i$ (at t=0) to $p_{i+1}$ (at t = 1).  $p_{i-1}$ is where the previous curve starts and $p_{i+2}$ is where the next curve ends.  Beziers can easily be splined by offsetting $p_{c1}$ from $p_1$ by the same amount and in the opposite direction from which the previous curve offset $p_{c2}$.
+
+\item Uniform cubic B-splines
+
+\[
+	P_i(t) = 
+	\left(
+		\begin{array}{cccc}
+			t^3 & t^2 & t & 1
+		\end{array}
+	\right)
+	\frac{1}{6}
+	\left(
+		\begin{array}{cccc}
+			-1 &  3 & -3 & 1  \\
+			 3 & -6 &  3 &  0 \\
+			-3 &  0 &  3 &  0 \\
+			 1 &  4 &  1 &  0 
+		\end{array}
+	\right)
+	\left(
+		\begin{array}{c}
+			p_{i-1}  \\
+			p_{i}     \\
+			p_{i+1} \\
+			p_{i+2} \\
+		\end{array}
+	\right)
+\]
+
+\item Catmull Rom splines
+
+\[
+	P_i(t) = 
+	\left(
+		\begin{array}{cccc}
+			t^3 & t^2 & t & 1
+		\end{array}
+	\right)
+	\left(
+		\begin{array}{cccc}
+			0 & 0 & 1 & 0 \\
+			0 & \tau & 0 & -\tau \\
+			-\tau & 3 - 2\tau & \tau - 3 & 2\tau
+		\end{array}
+	\right)
+	\left(
+		\begin{array}{c}
+			p_{i-1}  \\
+			p_{i}     \\
+			p_{i+1} \\
+			p_{i+2} \\
+		\end{array}
+	\right)
+\]
+
+0.5 is said to be a good value for the curve-tightness $\tau$ to start with when playing with Catmull Rom splines.
+
+\end{enumerate}
+\end{document}
