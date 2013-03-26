@@ -1,10 +1,12 @@
-\documentclass{article}
+\documentclass[12pt]{article}
 \usepackage{enumerate}
+\usepackage[a4paper, inner=2cm, outer=2cm, top=2cm, bottom=2cm, bindingoffset=0cm]{geometry}
 
 \begin{document}
 \title{Common Cubic Curves}
 \date{}
 \maketitle
+\thispagestyle{empty}
 
 These curves are constructed using just addition and multiplication.  However, because they require a *lot* of addition and multipication, they are summarised here in matrix notation.
 \\
@@ -82,9 +84,10 @@ will be nice and smooth.  The curve $P_i(t)$ runs from $p_i$ (at t=0) to $p_{i+1
 	\right)
 	\left(
 		\begin{array}{cccc}
-			0 & 0 & 1 & 0 \\
-			0 & \tau & 0 & -\tau \\
-			-\tau & 3 - 2\tau & \tau - 3 & 2\tau
+			-\tau & 2 - \tau & \tau - 2 & \tau \\
+			2\tau & \tau - 3 & 3 - 2\tau & -\tau \\
+			-\tau & 0 & \tau & 0 \\
+			0 & 1 & 0 & 0
 		\end{array}
 	\right)
 	\left(
