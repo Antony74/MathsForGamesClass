@@ -1,4 +1,5 @@
-class Cubic
+
+class CubicCurve
 {
   PVector getPoint(float t)
   {
@@ -71,6 +72,38 @@ class Cubic
     return new PVector(A.m[2][0], A.m[2][1]);
   }
   
+  // Constructs a Catmull-Rom spline
+  void constructCatmullRom(PVector ptPrev, PVector ptStart, PVector ptEnd, PVector ptNext, float tightness)
+  {
+    setCatmullRomMatrix(tightness);
+    
+    m_matrixX.construct1x4( ptPrev.x,
+                            ptStart.x,
+                            ptEnd.x,
+                            ptNext.x);
+
+    m_matrixY.construct1x4( ptPrev.y,
+                            ptStart.y,
+                            ptEnd.y,
+                            ptNext.y);
+  }
+  
+  // Constructs a uniform cubic B-spline
+  void constructBSpline(PVector ptPrev, PVector ptStart, PVector ptEnd, PVector ptNext, float tightness)
+  {
+    setBSplineMatrix();
+    
+    m_matrixX.construct1x4( ptPrev.x,
+                            ptStart.x,
+                            ptEnd.x,
+                            ptNext.x);
+
+    m_matrixY.construct1x4( ptPrev.y,
+                            ptStart.y,
+                            ptEnd.y,
+                            ptNext.y);
+  }
+
   void setBezierMatrix()
   {
     m_matrixCurve.construct4x4( -1,  3, -3, 1,
@@ -79,6 +112,24 @@ class Cubic
                                  1,  0,  0, 0);
   }
   
+  void setCatmullRomMatrix(float tau)
+  {
+    m_matrixCurve.construct4x4( -tau, 2-tau,     tau-2,  tau,
+                               2*tau, tau-3, 3-(2*tau), -tau,
+                                -tau,     0,       tau, 0,
+                                   0,     1,         0, 0);
+  }
+
+  void setBSplineMatrix()
+  {
+    m_matrixCurve.construct4x4(-1,  3, -3, 1,
+                                3, -6,  3, 0,
+                               -3,  0,  3, 0,
+                                1,  4,  1, 0);
+    
+    m_matrixCurve.divideMatrix(6);
+  }
+
   Matrix m_matrixCurve = new Matrix();
   Matrix m_matrixX = new Matrix();
   Matrix m_matrixY = new Matrix();
