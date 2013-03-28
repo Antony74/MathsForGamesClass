@@ -130,6 +130,11 @@ class CubicCurve
     m_matrixCurve.divideMatrix(6);
   }
 
+  PVector getSpecialPoint(int n)
+  {
+    return new PVector(m_matrixX.m[n][0], m_matrixY.m[n][0]);
+  }
+
   Matrix m_matrixCurve = new Matrix();
   Matrix m_matrixX = new Matrix();
   Matrix m_matrixY = new Matrix();
