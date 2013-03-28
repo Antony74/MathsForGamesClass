@@ -6,7 +6,6 @@
 \title{Common Cubic Curves}
 \date{}
 \maketitle
-\thispagestyle{empty}
 
 These curves are constructed using just addition and multiplication.  However, because they require a *lot* of addition and multipication, they are summarised here in matrix notation.
 \\
@@ -103,4 +102,48 @@ will be nice and smooth.  The curve $P_i(t)$ runs from $p_i$ (at t=0) to $p_{i+1
 0.5 is said to be a good value for the curve-tightness $\tau$ to start with when playing with Catmull Rom splines.
 
 \end{enumerate}
+
+\newpage
+\section*{Calculating Beziers from known points on curve}
+
+Here's the formula for a cubic Bezier curve
+
+\[
+v(t) = v_1(1-t)^3 + 3v_{c1}(1-t)^2t + 3v_{c2}(1-t)t^2 + v_2t^3
+\]
+
+The curve starts at $v_1$ and ends at $v_2$.  Given two additional known points on the curve $v(t_a)$ and $v(t_b)$, we can write this
+
+\[
+	\left(
+		\begin{array}{cc}
+			v_{c1} & v_{c2}
+		\end{array}
+	\right)
+	\left(
+		\begin{array}{cc}
+			3(1-t_a)^2t_a & 3(1-t_a)t_a^2 \\
+			3(1-t_b)^2t_b & 3(1-t_b)t_b^2
+		\end{array}
+	\right)
+	=
+	\left(
+		\begin{array}{c}
+			v(t_a) - v_1(1-t_a)^3 - v_2t_a^3 \\
+			v(t_b) - v_1(1-t_b)^3 - v_2t_b^3
+		\end{array}
+	\right)
+\]
+
+Which means we can compute our Bezier's control points $v_{c1}$ and $v_{c2}$ by performing Guassian elimination
+
+\[
+	\left(
+		\begin{array}{cc|c}
+			3(1-t_a)^2t_a & 3(1-t_a)t_a^2 & v(t_a) - v_1(1-t_a)^3 - v_2t_a^3 \\
+			3(1-t_b)^2t_b & 3(1-t_b)t_b^2 & v(t_b) - v_1(1-t_b)^3 - v_2t_b^3
+		\end{array}
+	\right)
+\]
+
 \end{document}
