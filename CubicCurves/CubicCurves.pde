@@ -16,6 +16,7 @@ void setup()
 {
   size(900, 600);
   rectMode(RADIUS);
+  smooth();
 
   switch(mode)
   {
